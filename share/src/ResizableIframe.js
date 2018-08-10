@@ -26,6 +26,7 @@ class ResizableIframe extends Component {
             height: iframe.contentWindow.document.body.scrollHeight + "px"
           })
         }}
+        title="Ray Message"
         ref="iframe"
         srcDoc={this.props.srcDoc}
         width="100%"
