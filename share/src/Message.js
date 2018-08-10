@@ -10,8 +10,13 @@ const Subject = (props) => {
 }
 
 const Address = (props) => {
-  const name = props.address.name
+  let name = props.address.name
   const email = props.address.email
+
+  if (!name || name.length === 0) {
+    name = email
+  }
+
   const mailto = `mailto:${email}`
 
   return (
