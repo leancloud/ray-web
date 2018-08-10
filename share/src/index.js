@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import './index.css'
+
 import Request from './Request'
 import Message from './Message'
 import Failure from './Failure'
