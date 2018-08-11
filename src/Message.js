@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { PacmanLoader } from 'react-spinners';
+import { css } from 'react-emotion';
+
 import ResizableIframe from './ResizableIframe'
 
 const Subject = (props) => {
@@ -59,6 +62,11 @@ const Content = (props) => {
   )
 }
 
+const loader = css`
+    display: block;
+    margin: 0 auto;
+`;
+
 class Message extends Component {
   state = { messageData: null, error: null }
 
@@ -97,7 +105,7 @@ class Message extends Component {
         </section>
       )
     } else {
-      return (<p>Loading...</p>);
+      return (<PacmanLoader className={loader} />);
     }
   }
 }
