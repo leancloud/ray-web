@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { PacmanLoader } from 'react-spinners';
 import { css } from 'react-emotion';
+import { Helmet } from 'react-helmet';
 
 const Subject = (props) => {
   return (
@@ -55,7 +56,7 @@ const Content = (props) => {
 
   return (
     <section className="content-box">
-      <div dangerouslySetInnerHTML={{__html: html}}/>
+      <div dangerouslySetInnerHTML={{ __html: html }} />
     </section>
   )
 }
@@ -70,14 +71,14 @@ class Message extends Component {
 
   componentDidMount() {
     const { shareToken } = this.props.match.params;
-    fetch(`https://us-alpha-mail.leancloud.cn/shares/${shareToken}`).then(response =>{
+    fetch(`https://us-alpha-mail.leancloud.cn/shares/${shareToken}`).then(response => {
       if (response.ok) {
         return response.json();
       } else {
         throw Error('Message not found.');
       }
     }).then(json => {
-      this.setState({messageData: json});
+      this.setState({ messageData: json });
     }).catch(error => {
       this.setState({ error })
     });
@@ -86,9 +87,9 @@ class Message extends Component {
   render() {
     if (this.state.error) {
       return (
-      <p>
-        An error occured when loading the message: {this.state.error.message}
-      </p>
+        <p>
+          An error occured when loading the message: {this.state.error.message}
+        </p>
       );
     } else if (this.state.messageData) {
       console.log(this.state.messageData);
@@ -97,6 +98,9 @@ class Message extends Component {
       console.log(from);
       return (
         <section className="message-box">
+          <Helmet>
+            <title>Ray - {subject}</title>
+          </Helmet>
           <Subject text={subject} />
           <Summary from={from} to={to} date={date} />
           <Content html={body} />
