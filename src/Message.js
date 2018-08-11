@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { PacmanLoader } from 'react-spinners';
 import { css } from 'react-emotion';
 
-import ResizableIframe from './ResizableIframe'
-
 const Subject = (props) => {
   return (
     <header className="subject-box">
