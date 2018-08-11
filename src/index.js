@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 
-import './index.css'
+import 'semantic-ui-css/semantic.min.css';
 
 import App from './App';
 
@@ -13,8 +13,3 @@ ReactDOM.render((
     <App />
   </BrowserRouter>
 ), root);
-// const messageToken = encodeURIComponent(window.location.pathname.slice(1))
-// 
-// Request.fetchMessage(messageToken)
-//   .then(data => ReactDOM.render(<Message data={data} />, root))
-//   .catch(error => ReactDOM.render(<Failure error={error} />, root))

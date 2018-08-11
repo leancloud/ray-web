@@ -1,53 +1,43 @@
 import React, { Component } from 'react'
-import { PacmanLoader } from 'react-spinners';
-import { css } from 'react-emotion';
 import { Helmet } from 'react-helmet';
 
-const Subject = (props) => {
-  return (
-    <header className="subject-box">
-      <span className="subject">{props.text}</span>
-    </header>
-  )
-}
-
 const Address = (props) => {
-  let name = props.address.name
-  const email = props.address.email
+  let name = props.address.name;
+  const email = props.address.email;
 
   if (!name || name.length === 0) {
-    name = email
+    name = email;
   }
 
-  const mailto = `mailto:${email}`
+  const mailto = `mailto:${email}`;
 
   return (
-    <span className="address-box">
-      <span className="address-name">{name}</span>
-      <a className="address-email" href={mailto}>&lt;{email}&gt;</a>
-    </span>
+    <a className="content" href={mailto}>{name}</a>
   )
 }
 
 const Summary = (props) => {
   const { from, to, date } = props
-
   const time = new Date(date * 1000)
-  const dateNode = <span className="summary-date">{time.toLocaleString()}</span>
+  const dateNode = <span className="content">{time.toLocaleString()}</span>
   const fromNodeList = from.map(address => <Address key={address.email} address={address} />)
   const toNodeList = to.map(address => <Address key={address.email} address={address} />)
 
   return (
-    <section className="summary-box">
-      <section className="summary-top-box">
-        <div className="summary-from-box">{fromNodeList}</div>
-        <div className="summary-date-box">{dateNode}</div>
-      </section>
-      <section className="summary-to-box">
-        <span className="summary-to-label">To:</span>
+    <div role='list' className='ui list'>
+      <div role='listitem' className='item'>
+        <i aria-hidden='true' className='arrow left icon' />
+        {fromNodeList}
+      </div>
+      <div role='listitem' className='item'>
+        <i aria-hidden='true' className='arrow right icon' />
         {toNodeList}
-      </section>
-    </section>
+      </div>
+      <div role='listitem' className='item'>
+        <i aria-hidden='true' className='clock outline icon' />
+        {dateNode}
+      </div>
+    </div>
   )
 }
 
@@ -60,11 +50,6 @@ const Content = (props) => {
     </section>
   )
 }
-
-const loader = css`
-    display: block;
-    margin: 0 auto;
-`;
 
 class Message extends Component {
   state = { messageData: null, error: null }
@@ -92,22 +77,25 @@ class Message extends Component {
         </p>
       );
     } else if (this.state.messageData) {
-      console.log(this.state.messageData);
       const { subject, from, to, date, body } = this.state.messageData;
-      console.log(subject);
-      console.log(from);
       return (
         <section className="message-box">
           <Helmet>
             <title>Ray - {subject}</title>
           </Helmet>
-          <Subject text={subject} />
+          <h2 className="ui header">{subject}</h2>
           <Summary from={from} to={to} date={date} />
           <Content html={body} />
         </section>
       )
     } else {
-      return (<PacmanLoader className={loader} />);
+      return (
+        <div className='ui active transition visible inverted dimmer'>
+          <div className='content'>
+            <div className='ui inverted text loader'>Loading</div>
+          </div>
+        </div>
+      );
     }
   }
 }
