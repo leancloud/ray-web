@@ -54,25 +54,52 @@ const Content = (props) => {
 
   return (
     <section className="content-box">
-      <ResizableIframe className="content-iframe" srcDoc={html} />
+      <div dangerouslySetInnerHTML={{__html: html}}/>
     </section>
   )
 }
 
 class Message extends Component {
+  state = { messageData: null, error: null }
 
-  render() {
-    const data = this.props.data
-
-    return (
-      <section className="message-box">
-        <Subject text={data.subject} />
-        <Summary from={data.from} to={data.to} date={data.date} />
-        <Content html={data.body} />
-      </section>
-    )
+  componentDidMount() {
+    const { shareToken } = this.props.match.params;
+    fetch(`https://us-alpha-mail.leancloud.cn/shares/${shareToken}`).then(response =>{
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw Error('Message not found.');
+      }
+    }).then(json => {
+      this.setState({messageData: json});
+    }).catch(error => {
+      this.setState({ error })
+    });
   }
 
+  render() {
+    if (this.state.error) {
+      return (
+      <p>
+        An error occured when loading the message: {this.state.error.message}
+      </p>
+      );
+    } else if (this.state.messageData) {
+      console.log(this.state.messageData);
+      const { subject, from, to, date, body } = this.state.messageData;
+      console.log(subject);
+      console.log(from);
+      return (
+        <section className="message-box">
+          <Subject text={subject} />
+          <Summary from={from} to={to} date={date} />
+          <Content html={body} />
+        </section>
+      )
+    } else {
+      return (<p>Loading...</p>);
+    }
+  }
 }
 
 export default Message
