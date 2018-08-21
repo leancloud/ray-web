@@ -86,7 +86,7 @@ class Message extends Component {
             <meta property="og:title" content={subject} />
             <meta property="og:description" content="A message shared from Ray" />
             <meta property="og:url" content={window.location.href} />
-            <meta property="og:image" content="https://hiray.io/icon.png" />
+            <meta property="og:image" content="https://share.hiray.io/icon.png" />
           </Helmet>
           <h2 className="ui header">{subject}</h2>
           <Summary from={from} to={to} date={date} />
